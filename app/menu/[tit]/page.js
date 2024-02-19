@@ -26,7 +26,7 @@ const CategoryPage = async ({ params: { tit } }) => {
        font-extralight mmd:grid-cols-1"
           >
             {category?.products.map((product) => {
-              return <ProductCard product={product} />;
+              return <ProductCard product={product} key={product.id} />;
             })}
           </div>
         </div>

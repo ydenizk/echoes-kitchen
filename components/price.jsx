@@ -9,21 +9,23 @@ function Price({ product }) {
   const [selected, setSelected] = useState(0);
   const { addToCart } = useCartStore();
 
-//bu useeffect i hydration için yani sayfa yenılemede cart daj-kı sayılar aynı kalsın  
-//istediğimiz için ,error verdiğiği için onu engellemek için yapuoruyz
-  useEffect(()=>{
-    useCartStore.persist.rehydrate()
-  },[])
+  //bu useeffect i hydration için yani sayfa yenılemede cart daj-kı sayılar aynı kalsın
+  //istediğimiz için ,error verdiğiği için onu engellemek için yapuoruyz
+  useEffect(() => {
+    useCartStore.persist.rehydrate();
+  }, []);
 
   useEffect(() => {
     if (product.options?.length) {
       setTotal(
-
         //(qty * product.price + qty*product.options[selected].price).toFixed(2)
-        parseFloat((qty * product.price + qty * product.options[selected].price).toFixed(2))
+        parseFloat(
+          (qty * product.price + qty * product.options[selected].price).toFixed(
+            2
+          )
+        )
       );
     }
-    console.log(total);
   }, [qty, selected, product]);
 
   return (
@@ -31,26 +33,25 @@ function Price({ product }) {
       <h1 className="tracking-wide  font-semibold py-2 text-2xl">{total} €</h1>
 
       <div className="w-full flex items-center justify-start my-2 mb-6">
-        {product.options?.length ?
-          (product.options.map((opt, index) => {
-            return (
-              <button
-                key={opt.id}
-                className="w-28 p-[6px] tracking-wide text-lg capitalize  mr-2 border border-slate-200 "
-                style={{
-                  background:
-                    selected === index ? "rgb(226 232 240)" : "rgb(26,26,33)",
-                  color:
-                    selected === index ? "rgb(26,26,33)" : "rgb(226 232 240)",
-                }}
-                onClick={() => setSelected(index)}
-              >
-                {opt.size}
-              </button>
-            );
-          })):null
-        
-        }
+        {product.options?.length
+          ? product.options.map((opt, index) => {
+              return (
+                <button
+                  key={opt.id}
+                  className="w-28 p-[6px] tracking-wide text-lg capitalize  mr-2 border border-slate-200 "
+                  style={{
+                    background:
+                      selected === index ? "rgb(226 232 240)" : "rgb(26,26,33)",
+                    color:
+                      selected === index ? "rgb(26,26,33)" : "rgb(226 232 240)",
+                  }}
+                  onClick={() => setSelected(index)}
+                >
+                  {opt.size}
+                </button>
+              );
+            })
+          : null}
       </div>
 
       {/* Chart part.. */}
@@ -98,5 +99,3 @@ function Price({ product }) {
 }
 
 export default Price;
-
-
