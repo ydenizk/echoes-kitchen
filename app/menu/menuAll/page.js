@@ -2,12 +2,33 @@ import React from "react";
 import { prisma } from "@/utils/prismaDb";
 import ProductCard from "@/components/productCard";
 import CartBox from "@/components/cartBox";
+import { Prisma } from "@prisma/client";
+
+const getData = async () => {
+  let categories;
+  try {
+    categories = await prisma.category.findMany({
+      orderBy: { id: "asc" },
+      include:{products:true}
+    });
+    console.log(categories);
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      // The .code property can be accessed in a type-safe manner
+      if (e.code === "P2002") {
+        console.log(
+          "There is a unique constraint violation, a new user cannot be created with this email"
+        );
+      }
+    }
+    throw e;
+  }
+  return categories;
+
+};
 
 const MenuAll = async () => {
-  const categories = await prisma.category.findMany({
-    orderBy: { createdAt: "asc" },
-    include: { products: true },
-  });
+  const categories = await getData();
 
   return (
     <div className="w-full py-20 bg-bgcolor">
@@ -22,7 +43,10 @@ const MenuAll = async () => {
         <div className="flex-2 gap-4 px-4">
           {categories.map((category) => {
             return (
-              <div className="w-full  text-left my-4 py-4 border-b border-neutral-400 " key={category.id}>
+              <div
+                className="w-full  text-left my-4 py-4 border-b border-neutral-400 "
+                key={category.id}
+              >
                 <h1
                   className="text-2xl p-3     
               bg-orange-950  capitalize font-bold tracking-wider whitespace-nowrap
