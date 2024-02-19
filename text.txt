@@ -1,0 +1,16 @@
+public key ve secrte key i al stripe dan önce
+
+<<docs da,accept online payments da, prebuiylt checkout page e gerek yok,,kendimiz yaptık <aten,
+custom payment flow ı kullan,nextjs i sec. 
+npm install stripe @stripe/stripe-js    >>bu backend için
+npm install @stripe/react-stripe-js      >ui için
+olarak stripe ı yukle
+
+mesela bu projedekı örnekten,
+cart page de click>>>>payment page,orda click >>>>success page
+aslında birde fail page yapılıor genelde biz yapmıcaz şimdi,home a yonlendirircez
+
+/sucess sayfasındakı mantık /success?id=intent_id
+en sonundada orders page e yonlendirme yapılacakj
+
+api yede confirm ve create-intent isimli iki dosya yaptık.
