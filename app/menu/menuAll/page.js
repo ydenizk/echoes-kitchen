@@ -34,7 +34,7 @@ const MenuAll = async () => {
                   className=" w-full   gap-4  grid grid-cols-2 text-slate-300 
               font-extralight mmd:grid-cols-1"
                 >
-                  {category?.products.map((product) => {
+                  {category?.products?.map((product) => {
                     return <ProductCard product={product} key={product.id} />;
                   })}
                 </div>
