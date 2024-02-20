@@ -4,13 +4,20 @@ import ProductCard from "@/components/productCard";
 import CartBox from "@/components/cartBox";
 import { Prisma } from "@prisma/client";
 
+const getData = async () => {
+  const res = await fetch(`${process.env.PUBLIC_URL}/api/category`, {
+    cache: "no-store",
+  });
 
+  if (res.ok) {
+    const categories = await res.json();
+
+    return categories;
+  }
+};
 
 const MenuAll = async () => {
-  const categories = await prisma.category.findMany({
-    orderBy: { id: "asc" },
-    include:{products:true}
-  });
+  const categories = await getData();
 
   return (
     <div className="w-full py-20 bg-bgcolor">

@@ -59,7 +59,7 @@ const SignInComponent = () => {
     } else {
       toast.success("You login successfully.");
       setTimeout(() => {
-        router.push("/menu");
+        router.push("/category");
       }, 1000);
     }
   };

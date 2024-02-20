@@ -4,11 +4,21 @@ import { prisma } from "@/utils/prismaDb";
 import CartBox from "@/components/cartBox";
 import ProductCard from "@/components/productCard";
 
-const CategoryPage = async ({ params: { tit } }) => {
-  const category = await prisma.category.findUnique({
-    where: { tit },
-    include: { products: true },
+const getData = async (tit) => {
+  const res = await fetch(`${process.env.PUBLIC_URL}/api/category/${tit}`, {
+    cache: "no-store",
   });
+
+  if (res.ok) {
+    const category = await res.json();
+
+    return category;
+  }
+};
+
+const CategoryPage = async ({ params }) => {
+  const singleCategory = params.tit;
+  const category = await getData(singleCategory);
 
   return (
     <div className="w-full my-10 mx-auto">

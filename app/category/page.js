@@ -3,19 +3,26 @@ import Link from "next/link";
 import { prisma } from "@/utils/prismaDb";
 import CartBox from "@/components/cartBox";
 
-
-
-
-async function MenuPage() {
-  
-  const categories = await prisma.category.findMany({
-    orderBy: { id: "desc" },
+const getData = async () => {
+  const res = await fetch(`${process.env.PUBLIC_URL}/api/category`, {
+    cache: "no-store",
   });
 
+  if (res.ok) {
+    const categories = await res.json();
+
+    return categories;
+  }
+};
+
+async function MenuPage() {
+  const categories = await getData();
   return (
     <div className="w-full my-10">
-      <h1 className="text-3xl p-4  mx-auto text-center w-1/2  border-2 whitespace-nowrap
-       border-blackk mmd:text-2xl min-w-fit">
+      <h1
+        className="text-3xl p-4  mx-auto text-center w-1/2  border-2 whitespace-nowrap
+       border-blackk mmd:text-2xl min-w-fit"
+      >
         Check out Our Categories
       </h1>
 
@@ -36,7 +43,7 @@ async function MenuPage() {
             })}
             <div className="w-full text-center mt-12">
               <Link
-                href="/menu/menuAll"
+                href="/category/menuAll"
                 className=" text-slate-300 w-[50%]  transition duration-500  hover:bg-orange-900 tracking-wider 
                  uppercase bg-orange-950 text-xl py-5 rounded-md text-left px-12 whitespace-nowrap min-w-fit mx-auto "
               >
