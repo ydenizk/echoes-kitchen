@@ -112,7 +112,7 @@ function CartPage() {
                   No items added yet !
                 </h1>
                 <Link
-                  href="/menu"
+                  href="/category"
                   className="uppercase border bg-slate-300 text-blackk rounded w-1/2 p-3 text-center 
              mx-auto    transition hover:bg-slate-400 duration-300 cursor-pointer"
                 >

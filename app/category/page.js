@@ -2,37 +2,20 @@ import React from "react";
 import Link from "next/link";
 import { prisma } from "@/utils/prismaDb";
 import CartBox from "@/components/cartBox";
-import { Prisma } from "@prisma/client";
 
-const getData = async () => {
-  let categories
-  try {
-  categories = await prisma.category.findMany({
-      orderBy: { id: "desc" },
-    });
-  } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      // The .code property can be accessed in a type-safe manner
-      if (e.code === "P2002") {
-        console.log(
-          "There is a unique constraint violation, a new user cannot be created with this email"
-        );
-      }
-    }
-    throw e;
-  }
-  return categories;
-};
+
+
 
 async function MenuPage() {
-  const categories = await getData();
+  
+  const categories = await prisma.category.findMany({
+    orderBy: { id: "desc" },
+  });
 
   return (
     <div className="w-full my-10">
-      <h1
-        className="text-3xl p-4  mx-auto text-center w-1/2  border-2 whitespace-nowrap
-       border-blackk mmd:text-2xl min-w-fit"
-      >
+      <h1 className="text-3xl p-4  mx-auto text-center w-1/2  border-2 whitespace-nowrap
+       border-blackk mmd:text-2xl min-w-fit">
         Check out Our Categories
       </h1>
 
@@ -42,7 +25,7 @@ async function MenuPage() {
             {categories.map((cat) => {
               return (
                 <Link
-                  href={`/menu/${cat.tit}`}
+                  href={`/category/${cat.tit}`}
                   key={cat.id}
                   className=" text-slate-300 w-[50%]  transition duration-500 hover:bg-orange-900 tracking-wider 
                  uppercase bg-blackk text-xl py-5 rounded-md text-left px-12 whitespace-nowrap min-w-fit"
